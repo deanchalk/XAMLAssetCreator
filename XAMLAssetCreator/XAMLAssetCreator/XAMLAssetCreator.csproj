@@ -239,11 +239,6 @@
     <Content Include="Assets\Icon71.scale-150.png" />
     <Content Include="Assets\Icon71.scale-200.png" />
     <Content Include="Assets\Icon71.scale-400.png" />
-    <Content Include="Assets\splash.scale-100.png" />
-    <Content Include="Assets\splash.scale-125.png" />
-    <Content Include="Assets\splash.scale-150.png" />
-    <Content Include="Assets\splash.scale-200.png" />
-    <Content Include="Assets\splash.scale-400.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
