@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="91f91596-d921-4634-8ec0-0247844007d0"
-    Publisher="CN=deanc"
-    Version="1.0.0.0" />
+    Name="54363DeanChalk.XAMLAssetCreator"
+    Publisher="CN=2125F531-C174-45E2-BCEC-99A66F9C9DF5"
+    Version="1.0.1.0" />
 
-  <mp:PhoneIdentity PhoneProductId="91f91596-d921-4634-8ec0-0247844007d0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="c9691fa4-2462-4d6b-a436-eac33159a9d1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>XAMLAssetCreator</DisplayName>
-    <PublisherDisplayName>deanc</PublisherDisplayName>
+    <DisplayName>XAML Asset Creator</DisplayName>
+    <PublisherDisplayName>Dean Chalk</PublisherDisplayName>
     <Logo>Assets\Icon50.png</Logo>
   </Properties>
 
@@ -41,10 +41,10 @@
             <uap:ShowOn Tile="square150x150Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
         <uap:LockScreen BadgeLogo="Assets\Icon24.png" Notification="badgeAndTileText"/>
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
+        <uap:SplashScreen BackgroundColor="white" Image="Assets\splash.png"/>
       </uap:VisualElements>
     </Application>
   </Applications>
