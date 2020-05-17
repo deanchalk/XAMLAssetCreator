@@ -4,17 +4,18 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using XAMLAssetCreator.Core;
 
 namespace XAMLAssetCreator.Controls
 {
     public sealed partial class ForegroundColorWidget
     {
         private Brush _color;
-        private string _colorString = "#B10821";
+        private string _colorString = Constants.AppAccentColor;
 
         public ForegroundColorWidget()
         {
-            _color = GetColorFromString("#B10821");
+            _color = GetColorFromString(Constants.AppAccentColor);
             InitializeComponent();
         }
 

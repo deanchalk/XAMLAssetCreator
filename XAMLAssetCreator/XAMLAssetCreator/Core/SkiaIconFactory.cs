@@ -12,18 +12,12 @@ namespace XAMLAssetCreator.Core
             if (string.IsNullOrEmpty(hex))
                 return SKColors.Transparent;
             hex = hex.TrimStart('#').Trim();
-            if (hex.Length == 8 && hex.StartsWith("00"))
-            {
-                return SKColors.Transparent;
-            }
+            if (hex.Length == 8 && hex.StartsWith("00")) return SKColors.Transparent;
             var bytes = Enumerable.Range(0, hex.Length)
-                .Where(x => x%2 == 0)
+                .Where(x => x % 2 == 0)
                 .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
                 .ToList();
-            if (bytes.Count > 3)
-            {
-                return new SKColor(bytes[1], bytes[2], bytes[3], bytes[0]);
-            }
+            if (bytes.Count > 3) return new SKColor(bytes[1], bytes[2], bytes[3], bytes[0]);
             return new SKColor(bytes[0], bytes[1], bytes[2]);
         }
 
@@ -31,16 +25,17 @@ namespace XAMLAssetCreator.Core
             string foreground, BackgroundType bacgroundType, double leftRightOffset, double upDownOffset)
         {
             var path = PathGeometryFactory.FromString(pathData);
-            SKRect rect;
-            path.GetBounds(out rect);
-            var padding = (size - pad)/size;
-            var scaling = (float) size*(float) padding/Math.Max(rect.Bottom, rect.Right);
-            var trans = (float) pad/scaling/2f;
+            path.GetBounds(out var rect);
+            var padding = (size - pad) / size;
+            var scaling = (float) size * (float) padding / Math.Max(rect.Bottom, rect.Right);
+            var trans = (float) pad / scaling / 2f;
             var intSize = (int) Math.Ceiling(size);
-            var buff = Marshal.AllocCoTaskMem(intSize*intSize*4);
+            var buff = Marshal.AllocCoTaskMem(intSize * intSize * 4);
             try
             {
-                using (var surface = SKSurface.Create(new SKPixmap(new SKImageInfo(intSize, intSize, SKImageInfo.PlatformColorType),  buff, intSize*4)))
+                using (var surface =
+                    SKSurface.Create(new SKPixmap(new SKImageInfo(intSize, intSize, SKImageInfo.PlatformColorType),
+                        buff, intSize * 4)))
                 {
                     var canvas = surface.Canvas;
                     canvas.Clear(SKColors.Transparent);
@@ -60,22 +55,21 @@ namespace XAMLAssetCreator.Core
                         }
 
                         path.Transform(SKMatrix.MakeTranslation(trans, trans));
-                        path.Transform(SKMatrix.MakeTranslation((float)leftRightOffset/scaling, (float)upDownOffset / scaling));
+                        path.Transform(SKMatrix.MakeTranslation((float) leftRightOffset / scaling,
+                            (float) upDownOffset / scaling));
                         path.Transform(SKMatrix.MakeScale(scaling, scaling));
                         paint.Color = GetColorInfoFromString(foreground);
                         canvas.DrawPath(path, paint);
                     }
-                    var pixels = new byte[intSize*intSize*4];
+
+                    var pixels = new byte[intSize * intSize * 4];
                     Marshal.Copy(buff, pixels, 0, pixels.Length);
                     return pixels;
                 }
             }
             finally
             {
-                if (buff != IntPtr.Zero)
-                {
-                    Marshal.FreeCoTaskMem(buff);
-                }
+                if (buff != IntPtr.Zero) Marshal.FreeCoTaskMem(buff);
             }
         }
 
@@ -83,14 +77,15 @@ namespace XAMLAssetCreator.Core
             string foreground, BackgroundType bacgroundType, double leftRightOffset, double upDownOffset)
         {
             var path = PathGeometryFactory.FromString(pathData);
-            SKRect rect;
-            path.GetBounds(out rect);
-            var padding = (size - pad)/size;
-            var scaling = (float) size*(float) padding/Math.Max(rect.Bottom, rect.Right);
-            var trans = (float) pad/scaling/2f;
+            path.GetBounds(out var rect);
+            var padding = (size - pad) / size;
+            var scaling = (float) size * (float) padding / Math.Max(rect.Bottom, rect.Right);
+            var trans = (float) pad / scaling / 2f;
             var intSize = (int) Math.Ceiling(size);
-            var buff = Marshal.AllocCoTaskMem(intSize*intSize*4);
-            using (var surface = SKSurface.Create(new SKPixmap(new SKImageInfo(intSize, intSize, SKImageInfo.PlatformColorType),  buff, intSize*4)))
+            var buff = Marshal.AllocCoTaskMem(intSize * intSize * 4);
+            using (var surface =
+                SKSurface.Create(new SKPixmap(new SKImageInfo(intSize, intSize, SKImageInfo.PlatformColorType), buff,
+                    intSize * 4)))
             {
                 var canvas = surface.Canvas;
                 canvas.Clear(SKColors.Transparent);
@@ -110,11 +105,13 @@ namespace XAMLAssetCreator.Core
                     }
 
                     path.Transform(SKMatrix.MakeTranslation(trans, trans));
-                    path.Transform(SKMatrix.MakeTranslation((float)leftRightOffset / scaling, (float)upDownOffset / scaling));
+                    path.Transform(SKMatrix.MakeTranslation((float) leftRightOffset / scaling,
+                        (float) upDownOffset / scaling));
                     path.Transform(SKMatrix.MakeScale(scaling, scaling));
                     paint.Color = GetColorInfoFromString(foreground);
                     canvas.DrawPath(path, paint);
                 }
+
                 var image = surface.Snapshot();
                 var data = image.Encode(SKEncodedImageFormat.Png, 1);
                 return data;

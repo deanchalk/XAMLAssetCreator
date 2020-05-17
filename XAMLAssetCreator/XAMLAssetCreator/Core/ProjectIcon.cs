@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace XAMLAssetCreator.Core
+﻿namespace XAMLAssetCreator.Core
 {
     public class ProjectIcon : NotifyBase
     {
@@ -94,6 +91,5 @@ namespace XAMLAssetCreator.Core
                 OnPropertyChanged();
             }
         }
-
     }
 }

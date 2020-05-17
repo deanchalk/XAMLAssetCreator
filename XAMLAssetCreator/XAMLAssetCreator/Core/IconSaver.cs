@@ -23,7 +23,7 @@ namespace XAMLAssetCreator.Core
                     CommitButtonText = "Save Icon Project",
                     DefaultFileExtension = ".icpro"
                 };
-                picker.FileTypeChoices["Icon Creator Pro Project"] = new List<string>(new[] { ".icpro" });
+                picker.FileTypeChoices["Icon Creator Pro Project"] = new List<string>(new[] {".icpro"});
                 picker.SuggestedFileName = App.CurrentProject.Name + ".icpro";
                 var file = await picker.PickSaveFileAsync();
                 if (file == null)
@@ -35,19 +35,14 @@ namespace XAMLAssetCreator.Core
             await FileIO.WriteTextAsync(App.CurrentFile, doc.ToString(SaveOptions.None));
             var status = await CachedFileManager.CompleteUpdatesAsync(App.CurrentFile);
             if (status == FileUpdateStatus.Complete)
-            {
                 await new MessageDialog("Project was successfully saved").ShowAsync();
-            }
             else
-            {
                 await new MessageDialog("Project could not be saved").ShowAsync();
-            }
-
         }
 
         public static async Task<Project> LoadProject()
         {
-            FileOpenPicker filePicker = new FileOpenPicker
+            var filePicker = new FileOpenPicker
             {
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
                 CommitButtonText = "Open Icon Project"
@@ -77,30 +72,21 @@ namespace XAMLAssetCreator.Core
 
         private static TEnum GetAttributeValueEnum<TEnum>(XAttribute a)
         {
-            if (a == null)
-            {
-                return default;
-            }
+            if (a == null) return default;
             return (TEnum) Enum.Parse(typeof(TEnum), a.Value);
         }
 
         private static Project LoadAndCreateProject(XDocument doc)
         {
             var project = new Project();
-            foreach (var size in project.StandardSizes)
-            {
-                size.IsSelected = false;
-            }
+            foreach (var size in project.StandardSizes) size.IsSelected = false;
             var root = doc.Element("IconProject");
-            if (root == null)
-            {
-                return project;
-            }
+            if (root == null) return project;
             project.IncludeCustomAndroid = GetAttributeValueBool(root.Attribute("IncludeCustomAndroid"));
             project.IncludeCustomApple = GetAttributeValueBool(root.Attribute("IncludeCustomApple"));
             project.IncludeCustomWindows = GetAttributeValueBool(root.Attribute("IncludeCustomWindows"));
             project.Name = root.Attribute("Name")?.Value;
-            foreach (var element in root.Element("Icons")?.Elements("Icon") ?? new XElement[]{})
+            foreach (var element in root.Element("Icons")?.Elements("Icon") ?? new XElement[] { })
             {
                 var picon = new ProjectIcon
                 {
@@ -116,7 +102,8 @@ namespace XAMLAssetCreator.Core
                 };
                 project.Icons.Add(picon);
             }
-            foreach (var custom in root.Element("CustomSizes")?.Elements("CustomSize") ?? new XElement[]{})
+
+            foreach (var custom in root.Element("CustomSizes")?.Elements("CustomSize") ?? new XElement[] { })
             {
                 var cutomSize = new CustomIconInfo
                 {
@@ -124,11 +111,13 @@ namespace XAMLAssetCreator.Core
                 };
                 project.CustomSizes.Add(cutomSize);
             }
-            foreach (var standard in root.Element("StandardSizes")?.Elements("StandardSize") ?? new XElement[]{})
+
+            foreach (var standard in root.Element("StandardSizes")?.Elements("StandardSize") ?? new XElement[] { })
             {
                 var sizeInfo = GetAttributeValueEnum<StandardIconConfig>(standard.Attribute("SizeId"));
                 project.StandardSizes.First(s => s.IconConfig == sizeInfo).IsSelected = true;
             }
+
             return project;
         }
 
@@ -158,6 +147,7 @@ namespace XAMLAssetCreator.Core
                 iconElement.Value = icon.IconData;
                 icons.Add(iconElement);
             }
+
             var standard = new XElement("StandardSizes");
             root.Add(standard);
             foreach (var size in project.StandardSizes)
@@ -166,6 +156,7 @@ namespace XAMLAssetCreator.Core
                 standardElement.Add(new XAttribute("SizeId", size.IconConfig));
                 standard.Add(standardElement);
             }
+
             var custom = new XElement("CustomSizes");
             root.Add(custom);
             foreach (var size in project.CustomSizes)
@@ -174,6 +165,7 @@ namespace XAMLAssetCreator.Core
                 customElement.Add(new XAttribute("Size", size.Size));
                 custom.Add(customElement);
             }
+
             return doc;
         }
     }

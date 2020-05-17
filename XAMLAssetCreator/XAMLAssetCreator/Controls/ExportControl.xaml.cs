@@ -73,9 +73,7 @@ namespace XAMLAssetCreator.Controls
                 e.Key != VirtualKey.Number4 && e.Key != VirtualKey.Number5 && e.Key != VirtualKey.Number6 &&
                 e.Key != VirtualKey.Number7 && e.Key != VirtualKey.Number8 && e.Key != VirtualKey.Number9 &&
                 e.Key != VirtualKey.Number0)
-            {
                 e.Handled = true;
-            }
         }
 
         private void OnRemove(object sender, RoutedEventArgs e)
@@ -92,10 +90,7 @@ namespace XAMLAssetCreator.Controls
             if (App.CurrentProject == null || !SelectCheckbox.IsChecked.HasValue)
                 return;
             var ch = SelectCheckbox.IsChecked.Value;
-            foreach (var item in App.CurrentProject.StandardSizes)
-            {
-                item.IsSelected = ch;
-            }
+            foreach (var item in App.CurrentProject.StandardSizes) item.IsSelected = ch;
         }
     }
 }

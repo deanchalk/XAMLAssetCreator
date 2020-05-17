@@ -5,17 +5,26 @@
     xmlns:controls="using:XAMLAssetCreator.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     Title="Choose Color"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    DefaultButton="Primary"
     PrimaryButtonText="Cancel"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    SecondaryButtonClick="SetColorClick"
     SecondaryButtonText="Set Color"
     mc:Ignorable="d">
 
     <Grid>
-        <controls:ColorPicker
+        <muxc:ColorPicker
             x:Name="ColorPicker"
-            Margin="10"
-            d:LayoutOverrides="Width, Height" />
+            ColorSpectrumShape="Ring"
+            IsAlphaEnabled="False"
+            IsAlphaSliderVisible="False"
+            IsAlphaTextInputVisible="False"
+            IsColorChannelTextInputVisible="True"
+            IsColorPreviewVisible="True"
+            IsColorSliderVisible="True"
+            IsColorSpectrumVisible="True"
+            IsHexInputVisible="True"
+            IsMoreButtonVisible="True" />
     </Grid>
 </ContentDialog>

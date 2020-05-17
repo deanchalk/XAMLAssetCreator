@@ -7,6 +7,7 @@ namespace XAMLAssetCreator.Core
     public static class ResourceMap
     {
         private static bool _isBuilt;
+
         public static Dictionary<string, List<IconData>> CategoryDict =
             new Dictionary<string, List<IconData>>();
 
@@ -20,7 +21,7 @@ namespace XAMLAssetCreator.Core
 
         private static void BuildMap()
         {
-            var icons = typeof (ResourceMap)
+            var icons = typeof(ResourceMap)
                 .GetTypeInfo()
                 .Assembly
                 .GetManifestResourceStream("XAMLAssetCreator.Resources.Icons.xml");
@@ -30,17 +31,11 @@ namespace XAMLAssetCreator.Core
             foreach (var element in doc.Root.Elements())
             {
                 var category = element.Attribute("Category")?.Value;
-                if (category == null)
-                {
-                    continue;
-                }
+                if (category == null) continue;
                 var label = element.Attribute("Label")?.Value;
                 var searchText = element.Attribute("Keywords")?.Value;
                 var data = element.Attribute("Value")?.Value;
-                if (!CategoryDict.ContainsKey(category))
-                {
-                    CategoryDict[category] = new List<IconData>();
-                }
+                if (!CategoryDict.ContainsKey(category)) CategoryDict[category] = new List<IconData>();
                 CategoryDict[category].Add(new IconData {Name = label, Data = data, SearchText = searchText});
             }
         }

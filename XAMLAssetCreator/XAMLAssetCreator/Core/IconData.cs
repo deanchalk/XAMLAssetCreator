@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-
-namespace XAMLAssetCreator.Core
+﻿namespace XAMLAssetCreator.Core
 {
     public struct IconData
     {

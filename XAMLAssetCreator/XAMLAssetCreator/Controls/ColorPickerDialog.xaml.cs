@@ -1,4 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
+using Microsoft.Toolkit.Uwp.Helpers;
+using XAMLAssetCreator.Core;
 
 namespace XAMLAssetCreator.Controls
 {
@@ -7,19 +9,18 @@ namespace XAMLAssetCreator.Controls
         public ColorPickerDialog(string startColor)
         {
             InitializeComponent();
-            ColorPicker.Color = startColor;
+            if (!string.IsNullOrWhiteSpace(startColor))
+            {
+                if (startColor == Constants.TransparentColor) startColor = Constants.PickerDefaultColor;
+                ColorPicker.Color = ColorHelper.ToColor(startColor);
+            }
         }
 
         public string Color { get; set; }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void SetColorClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            
-        }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            Color = ColorPicker.Color;
+            Color = ColorHelper.ToHex(ColorPicker.Color);
         }
     }
 }

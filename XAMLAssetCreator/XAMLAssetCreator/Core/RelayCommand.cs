@@ -5,17 +5,17 @@ namespace XAMLAssetCreator.Core
 {
     public class RelayCommand<T> : ICommand
     {
-        private readonly Func<T,bool> _canExecuteEvaluator;
-        private readonly Action<T> _methodToExecute;
+        private readonly Func<T, bool> _canExecFunc;
+        private readonly Action<T> _executeAction;
 
-        public RelayCommand(Action<T> methodToExecute, Func<T,bool> canExecuteEvaluator)
+        public RelayCommand(Action<T> executeAction, Func<T, bool> canExecFunc)
         {
-            this._methodToExecute = methodToExecute;
-            this._canExecuteEvaluator = canExecuteEvaluator;
+            _executeAction = executeAction;
+            _canExecFunc = canExecFunc;
         }
 
-        public RelayCommand(Action<T> methodToExecute)
-            : this(methodToExecute, null)
+        public RelayCommand(Action<T> executeAction)
+            : this(executeAction, null)
         {
         }
 
@@ -23,12 +23,9 @@ namespace XAMLAssetCreator.Core
 
         public bool CanExecute(object parameter)
         {
-            if (_canExecuteEvaluator == null)
-            {
-                return true;
-            }
+            if (_canExecFunc == null) return true;
 
-            var result = _canExecuteEvaluator.Invoke((T)parameter);
+            var result = _canExecFunc.Invoke((T) parameter);
             return result;
         }
 
@@ -36,10 +33,11 @@ namespace XAMLAssetCreator.Core
         {
             if (parameter == default)
             {
-                _methodToExecute.Invoke(default);
+                _executeAction.Invoke(default);
                 return;
             }
-            _methodToExecute.Invoke((T)parameter);
+
+            _executeAction.Invoke((T) parameter);
         }
     }
 }

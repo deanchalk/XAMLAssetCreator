@@ -119,14 +119,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AddIcons.xaml.cs">
-      <DependentUpon>AddIcons.xaml</DependentUpon>
+    <Compile Include="Controls\AddIconsDialog.xaml.cs">
+      <DependentUpon>AddIconsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BackgroundColorWidget.xaml.cs">
       <DependentUpon>BackgroundColorWidget.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ColorPicker.xaml.cs">
-      <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ColorPickerDialog.xaml.cs">
       <DependentUpon>ColorPickerDialog.xaml</DependentUpon>
@@ -138,11 +135,12 @@
       <DependentUpon>ForegroundColorWidget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageTile.cs" />
-    <Compile Include="Controls\NewProjectControl.xaml.cs">
-      <DependentUpon>NewProjectControl.xaml</DependentUpon>
+    <Compile Include="Controls\NewProjectDialog.xaml.cs">
+      <DependentUpon>NewProjectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SkiaView.cs" />
     <Compile Include="Converter\ColorConverter.cs" />
+    <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\CustomIconInfo.cs" />
     <Compile Include="Core\IconData.cs" />
     <Compile Include="Core\IconExporter.cs" />
@@ -184,15 +182,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\AddIcons.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\AddIconsDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\BackgroundColorWidget.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ColorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -208,9 +202,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\NewProjectControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\NewProjectDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>

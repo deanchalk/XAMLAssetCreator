@@ -4,6 +4,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using XAMLAssetCreator.Core;
 
 namespace XAMLAssetCreator.Controls
 {
@@ -49,23 +50,21 @@ namespace XAMLAssetCreator.Controls
                 ColorRect.Visibility = Visibility.Collapsed;
                 ColorTextBox.IsEnabled = false;
                 PickButton.IsEnabled = false;
-                ColorString = ColorPicker.Transparent;
+                SetBackground(Constants.TransparentColor);
             }
             else if (ColorRect != null && ColorTextBox != null && PickButton != null)
             {
                 ColorRect.Visibility = Visibility.Visible;
                 ColorTextBox.IsEnabled = true;
                 PickButton.IsEnabled = true;
+                if (!string.IsNullOrWhiteSpace(ColorString)) SetBackground(ColorString);
             }
         }
 
-        private async void OnPickColorClick(object sender, RoutedEventArgs e)
+        private void SetBackground(string colorVal)
         {
-            var dialog = new ColorPickerDialog(ColorString);
-            var result = await dialog.ShowAsync();
-            if (result != ContentDialogResult.Secondary)
-                return;
-            var prop = typeof(Colors).GetRuntimeProperty(dialog.Color);
+            if (colorVal == null) return;
+            var prop = typeof(Colors).GetRuntimeProperty(colorVal);
             var val = prop?.GetValue(null);
             if (val is Color cval)
             {
@@ -74,13 +73,22 @@ namespace XAMLAssetCreator.Controls
             }
 
             var color = Windows.UI.Color.FromArgb(
-                Convert.ToByte(Convert.ToInt32(dialog.Color.Substring(1, 2), 16)),
-                Convert.ToByte(Convert.ToInt32(dialog.Color.Substring(3, 2), 16)),
-                Convert.ToByte(Convert.ToInt32(dialog.Color.Substring(5, 2), 16)),
-                Convert.ToByte(Convert.ToInt32(dialog.Color.Substring(7, 2), 16)));
+                Convert.ToByte(Convert.ToInt32(colorVal.Substring(1, 2), 16)),
+                Convert.ToByte(Convert.ToInt32(colorVal.Substring(3, 2), 16)),
+                Convert.ToByte(Convert.ToInt32(colorVal.Substring(5, 2), 16)),
+                Convert.ToByte(Convert.ToInt32(colorVal.Substring(7, 2), 16)));
             Color = new SolidColorBrush(color);
-            ColorString = dialog.Color;
+            ColorString = colorVal;
             BackgroundChanged?.Invoke(this, ColorString);
+        }
+
+        private async void OnPickColorClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ColorPickerDialog(ColorString);
+            var result = await dialog.ShowAsync();
+            if (result != ContentDialogResult.Secondary)
+                return;
+            SetBackground(dialog.Color);
         }
     }
 }

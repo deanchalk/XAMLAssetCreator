@@ -50,97 +50,74 @@ namespace XAMLAssetCreator.Controls
             DependencyProperty.Register("UpDownOffset", typeof(double), typeof(SkiaView),
                 new PropertyMetadata(0d, OnPropertyValueChanged));
 
-        public SkiaView()
-        {
-
-        }
-
         public double LeftRightOffset
         {
-            get => (double)GetValue(LeftRightOffsetProperty);
+            get => (double) GetValue(LeftRightOffsetProperty);
             set => SetValue(LeftRightOffsetProperty, value);
         }
 
         public double UpDownOffset
         {
-            get => (double)GetValue(UpDownOffsetProperty);
+            get => (double) GetValue(UpDownOffsetProperty);
             set => SetValue(UpDownOffsetProperty, value);
         }
 
 
         public Color IconForeground
         {
-            get => (Color)GetValue(IconForegroundProperty);
+            get => (Color) GetValue(IconForegroundProperty);
             set => SetValue(IconForegroundProperty, value);
         }
 
         public Color IconBackground
         {
-            get => (Color)GetValue(IconBackgroundProperty);
+            get => (Color) GetValue(IconBackgroundProperty);
             set => SetValue(IconBackgroundProperty, value);
         }
 
         public BackgroundType BackgroundType
         {
-            get => (BackgroundType)GetValue(BackgroundTypeProperty);
+            get => (BackgroundType) GetValue(BackgroundTypeProperty);
             set => SetValue(BackgroundTypeProperty, value);
         }
 
         public int Padding
         {
-            get => (int)GetValue(PaddingProperty);
+            get => (int) GetValue(PaddingProperty);
             set => SetValue(PaddingProperty, value);
         }
 
         public int Size
         {
-            get => (int)GetValue(SizeProperty);
+            get => (int) GetValue(SizeProperty);
             set => SetValue(SizeProperty, value);
         }
 
         public string PathData
         {
-            get => (string)GetValue(PathDataProperty);
+            get => (string) GetValue(PathDataProperty);
             set => SetValue(PathDataProperty, value);
         }
 
         private static void OnColourPropertyValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var skiaView = d as SkiaView;
-            if (skiaView == null)
-            {
-                return;
-            }
-            if (!(e.OldValue is Color) || !(e.NewValue is Color))
-            {
-                return;
-            }
+            if (skiaView == null) return;
+            if (!(e.OldValue is Color) || !(e.NewValue is Color)) return;
 
-            var c1 = (Color)e.OldValue;
-            var c2 = (Color)e.NewValue;
-            if (c1.Equals(c2))
-            {
-                return;
-            }
+            var c1 = (Color) e.OldValue;
+            var c2 = (Color) e.NewValue;
+            if (c1.Equals(c2)) return;
             skiaView.RepaintBackground();
         }
 
         private static void OnPropertyValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var skiaView = d as SkiaView;
-            if (skiaView == null)
-            {
-                return;
-            }
-            if (e.OldValue.Equals(e.NewValue))
-            {
-                return;
-            }
+            if (skiaView == null) return;
+            if (e.OldValue.Equals(e.NewValue)) return;
 
-            if (string.IsNullOrWhiteSpace(skiaView.PathData))
-            {
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(skiaView.PathData)) return;
             skiaView.RepaintBackground();
         }
 

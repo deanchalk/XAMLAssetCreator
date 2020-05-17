@@ -9,18 +9,12 @@ namespace XAMLAssetCreator.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
-            {
-                return Colors.Transparent;
-            }
+            if (value == null) return Colors.Transparent;
             var colorString = value.ToString();
-            
-            var property = typeof (Colors).GetRuntimeProperty(colorString);
+
+            var property = typeof(Colors).GetRuntimeProperty(colorString);
             var color = property?.GetValue(null);
-            if (color is Color)
-            {
-                return color;
-            }
+            if (color is Color) return color;
 
             try
             {
@@ -34,6 +28,7 @@ namespace XAMLAssetCreator.Converter
             {
                 // Invalid value
             }
+
             return Colors.Transparent;
         }
 

@@ -1,0 +1,147 @@
+﻿<ContentDialog
+    x:Class="XAMLAssetCreator.Controls.AddIconsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:XAMLAssetCreator.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:XAMLAssetCreator.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    Title="Add Icons to Project"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary"
+    PrimaryButtonClick="OnPrimaryButtonClick"
+    PrimaryButtonText="Add Icons"
+    mc:Ignorable="d">
+    <ContentDialog.Resources>
+        <muxc:UniformGridLayout
+            x:Name="UniformGridLayout"
+            MinColumnSpacing="4"
+            MinRowSpacing="4" />
+        <DataTemplate x:Key="IconTemplate" x:DataType="core:IconWrapper">
+            <Button
+                Background="Transparent"
+                Command="{x:Bind SelectCommand}"
+                CommandParameter="{x:Bind Data}"
+                ToolTipService.ToolTip="{x:Bind Data.Name}">
+                <local:SkiaView
+                    Margin="4"
+                    BackgroundType="None"
+                    IconBackground="Transparent"
+                    IconForeground="{StaticResource UnselectedIconColor}"
+                    PathData="{x:Bind Data.Data}"
+                    Size="32" />
+            </Button>
+        </DataTemplate>
+    </ContentDialog.Resources>
+    <Border BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1">
+        <Grid Background="{StaticResource ControlBackgroundBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="0"
+                Margin="0,24,24,0"
+                VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    Text="Categories" />
+                <ComboBox
+                    x:Name="ComboBox"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    MinWidth="200"
+                    Margin="12,0,24,8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    ItemsSource="{x:Bind Categories}"
+                    SelectionChanged="OnComboboxChanged" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Text="Search"
+                    TextWrapping="Wrap" />
+                <TextBox
+                    x:Name="SearchText"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    MinWidth="200"
+                    Margin="12,0,24,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Text=""
+                    TextChanged="OnSearchTextChanged"
+                    TextWrapping="NoWrap"
+                    UseLayoutRounding="False" />
+            </Grid>
+            <Grid Grid.Row="1" Margin="0,24,0,0">
+                <ScrollViewer MaxHeight="400" IsVerticalScrollChainingEnabled="False">
+                    <muxc:ItemsRepeater
+                        x:Name="Repeater"
+                        Margin="12,0"
+                        ItemTemplate="{StaticResource IconTemplate}"
+                        Layout="{StaticResource UniformGridLayout}" />
+                </ScrollViewer>
+            </Grid>
+            <Border
+                Grid.Row="2"
+                Height="100"
+                Padding="0"
+                Background="{StaticResource ControlBackgroundEmphasis}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ListView
+                        x:Name="SelectedItemsListView"
+                        IsItemClickEnabled="True"
+                        ItemClick="SelectedItemClick"
+                        ItemsSource="{x:Bind SelectedItems}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollMode="Enabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollMode="Disabled">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Background="{StaticResource ControlBackgroundEmphasis}" Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <local:SkiaView
+                                    Margin="12"
+                                    BackgroundType="None"
+                                    IconBackground="Transparent"
+                                    IconForeground="{StaticResource HilightColor}"
+                                    PathData="{Binding Data}"
+                                    Size="54" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</ContentDialog>
