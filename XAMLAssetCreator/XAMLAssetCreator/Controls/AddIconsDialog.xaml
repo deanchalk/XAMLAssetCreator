@@ -7,7 +7,7 @@
     xmlns:local="using:XAMLAssetCreator.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    Title="Add Icons to Project"
+    Title="Add Icons to Project (you can add more later)"
     CloseButtonText="Cancel"
     DefaultButton="Primary"
     PrimaryButtonClick="OnPrimaryButtonClick"
@@ -89,8 +89,19 @@
                     TextWrapping="NoWrap"
                     UseLayoutRounding="False" />
             </Grid>
-            <Grid Grid.Row="1" Margin="0,24,0,0">
-                <ScrollViewer MaxHeight="400" IsVerticalScrollChainingEnabled="False">
+            <Grid Grid.Row="1" Margin="0,8,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Margin="0,5"
+                    HorizontalAlignment="Center"
+                    Text="(click on any icon below to select)" />
+                <ScrollViewer
+                    Grid.Row="1"
+                    MaxHeight="400"
+                    IsVerticalScrollChainingEnabled="False">
                     <muxc:ItemsRepeater
                         x:Name="Repeater"
                         Margin="12,0"
@@ -100,16 +111,23 @@
             </Grid>
             <Border
                 Grid.Row="2"
-                Height="100"
+                Height="120"
                 Padding="0"
                 Background="{StaticResource ControlBackgroundEmphasis}">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Margin="0,5"
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource HilightBrush}"
+                        Text="selected icons below (click to de-select)" />
                     <ListView
                         x:Name="SelectedItemsListView"
+                        Grid.Row="1"
+                        Margin="4"
                         IsItemClickEnabled="True"
                         ItemClick="SelectedItemClick"
                         ItemsSource="{x:Bind SelectedItems}"

@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="HilightColor">#B10821</Color>
+    <Color x:Key="HilightColor">#162496</Color>
     <Color x:Key="UnselectedIconColor">Black</Color>
     <SolidColorBrush x:Key="HilightBrush" Color="{StaticResource HilightColor}" />
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="White" />

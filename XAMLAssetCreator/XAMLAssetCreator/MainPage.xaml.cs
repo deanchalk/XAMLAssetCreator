@@ -40,7 +40,7 @@ namespace XAMLAssetCreator
             foreach (var icon in selected) icon.ForegroundColor = e;
         }
 
-        private async void ExportProject_OnClick(object sender, RoutedEventArgs e)
+        private async void ExportProjectClick(object sender, RoutedEventArgs e)
         {
             if (!await CheckIconNames()) return;
             Canvas.SetZIndex(ExportIconsLayer, 1);

@@ -4,6 +4,6 @@
     {
         public const string TransparentColor = "#00FFFFFF";
         public const string PickerDefaultColor = "#FFEEDD";
-        public const string AppAccentColor = "#B10821";
+        public const string AppAccentColor = "#162496";
     }
 }
