@@ -9,7 +9,7 @@
   <Identity
     Name="54363DeanChalk.XAMLAssetCreator"
     Publisher="CN=2125F531-C174-45E2-BCEC-99A66F9C9DF5"
-    Version="1.0.2.0" />
+    Version="1.0.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="c9691fa4-2462-4d6b-a436-eac33159a9d1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -41,7 +41,7 @@
             <uap:ShowOn Tile="square150x150Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
-        <uap:LockScreen BadgeLogo="Assets\Icon24.png" Notification="badgeAndTileText"/>
+        <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\BadgeLogo.png"/>
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
         <uap:SplashScreen BackgroundColor="white"  Image="Assets\SplashScreen.png"/>
