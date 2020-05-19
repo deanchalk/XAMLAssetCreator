@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Popups;
+using SkiaSharp;
 using XAMLAssetCreator.Controls;
 
 namespace XAMLAssetCreator.Core
@@ -97,6 +99,49 @@ namespace XAMLAssetCreator.Core
                             icon.UpDownOffset, folders[TargetFolder.Androidxxxhdpi], $"{icon.Name}{size.Size}.png");
                     }
                 }
+
+                var xamlFolder = folders[TargetFolder.Xaml];
+                var xamlFileName = $"{icon.Name}.xaml";
+                var padding = icon.Padding;
+                var left = (padding + icon.LeftRightOffset)/2d;
+                var right = (padding - icon.LeftRightOffset)/2d;
+                var up = (padding + icon.UpDownOffset)/2d;
+                var down = (padding - icon.UpDownOffset)/2d;
+                var content = string.Empty;
+                switch (icon.BackType)
+                {
+                    case BackgroundType.None:
+                        content = $@"
+<Viewbox Width=""200"" Height=""200"">
+    <Grid Width=""100"" Height=""100"">
+        <Path Stretch=""Fill"" Margin=""{left},{up},{right},{down}"" Data=""{icon.IconData}"" Fill=""{icon.ForegroundColor}"" />
+    </Grid>
+</Viewbox>";
+                        break;
+                    case BackgroundType.Square:
+                        content = $@"
+<Viewbox Width=""200"" Height=""200"">
+    <Grid Width=""100"" Height=""100"">
+        <Rectangle Width=""100"" Height=""100"" Fill=""{icon.BackgroundColor}"" />
+        <Path Stretch=""Fill"" Margin=""{left},{up},{right},{down}"" Data=""{icon.IconData}"" Fill=""{icon.ForegroundColor}"" />
+    </Grid>
+</Viewbox>";
+                        break;
+                    case BackgroundType.Circle:
+                        content = $@"
+<Viewbox Width=""200"" Height=""200"">
+    <Grid Width=""100"" Height=""100"">
+        <Ellipse Width=""100"" Height=""100"" Fill=""{icon.BackgroundColor}"" />
+        <Path Stretch=""Fill"" Margin=""{left},{up},{right},{down}"" Data=""{icon.IconData}"" Fill=""{icon.ForegroundColor}"" />
+    </Grid>
+</Viewbox>";
+                        break;
+                }
+                var file = await xamlFolder.CreateFileAsync(xamlFileName, CreationCollisionOption.ReplaceExisting);
+                using (var writer = new StreamWriter(await file.OpenStreamForWriteAsync()))
+                {
+                    await writer.WriteLineAsync(content);
+                }
             }
         }
 
@@ -136,6 +181,7 @@ namespace XAMLAssetCreator.Core
             var folderIos = await mainFolder.CreateFolderAsync("Apple", CreationCollisionOption.ReplaceExisting);
             var folderWindows = await mainFolder.CreateFolderAsync("Windows", CreationCollisionOption.ReplaceExisting);
             var folderAndroid = await mainFolder.CreateFolderAsync("Android", CreationCollisionOption.ReplaceExisting);
+            var folderXaml = await mainFolder.CreateFolderAsync("XAML", CreationCollisionOption.ReplaceExisting);
             var folderAldpi = await folderAndroid.CreateFolderAsync("ldpi", CreationCollisionOption.ReplaceExisting);
             var folderAmdpi = await folderAndroid.CreateFolderAsync("mdpi", CreationCollisionOption.ReplaceExisting);
             var folderAhdpi = await folderAndroid.CreateFolderAsync("hdpi", CreationCollisionOption.ReplaceExisting);
@@ -146,7 +192,7 @@ namespace XAMLAssetCreator.Core
                 await folderAndroid.CreateFolderAsync("xxxhdpi", CreationCollisionOption.ReplaceExisting);
             var dict = new Dictionary<TargetFolder, StorageFolder>
             {
-                [TargetFolder.Apple] = folderIos, [TargetFolder.Windows] = folderWindows,
+                [TargetFolder.Apple] = folderIos, [TargetFolder.Windows] = folderWindows, [TargetFolder.Xaml] = folderXaml,
                 [TargetFolder.Androidldpi] = folderAldpi, [TargetFolder.Androidmdpi] = folderAmdpi,
                 [TargetFolder.Androidhdpi] = folderAhdpi, [TargetFolder.Androidxhdpi] = folderAxhdpi,
                 [TargetFolder.Androidxxhdpi] = folderAxxhdpi, [TargetFolder.Androidxxxhdpi] = folderAxxxhdpi
@@ -163,7 +209,8 @@ namespace XAMLAssetCreator.Core
             Androidhdpi,
             Androidxhdpi,
             Androidxxhdpi,
-            Androidxxxhdpi
+            Androidxxxhdpi,
+            Xaml
         }
     }
 }

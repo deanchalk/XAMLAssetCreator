@@ -191,7 +191,7 @@
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid
-                                    ItemHeight="180"    
+                                    ItemHeight="180"
                                     ItemWidth="150"
                                     Orientation="Horizontal" />
                             </ItemsPanelTemplate>
@@ -371,6 +371,7 @@
                 </Viewbox>
                 <TextBlock
                     Grid.Row="2"
+                    Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="0,30,0,0"
                     HorizontalAlignment="Center"
