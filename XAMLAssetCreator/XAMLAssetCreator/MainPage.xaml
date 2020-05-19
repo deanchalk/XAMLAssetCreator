@@ -156,7 +156,7 @@
         <Grid
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Background="white">
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -191,7 +191,7 @@
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid
-                                    ItemHeight="180"
+                                    ItemHeight="180"    
                                     ItemWidth="150"
                                     Orientation="Horizontal" />
                             </ItemsPanelTemplate>
@@ -329,7 +329,7 @@
                     Margin="12" />
             </Grid>
         </Grid>
-        <Grid x:Name="IntroGrid" Background="White">
+        <Grid x:Name="IntroGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

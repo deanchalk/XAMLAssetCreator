@@ -11,8 +11,8 @@
     <Grid
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch"
-        Background="White">
-        <Border BorderBrush="Black" BorderThickness="1">
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Border BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="1">
             <Grid>
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
